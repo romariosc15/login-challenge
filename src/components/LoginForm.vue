@@ -57,34 +57,28 @@ const signIn = () => {
   background-color: white;
   width: 20%;
   padding: 2rem 2.5rem;
-  border-radius: 1rem;
 }
 
 .login-title {
-  font-size: 1.5rem;
+  font-size: var(--font-size-xl);
   font-weight: 700;
   text-align: center;
-  margin-bottom: 1rem;
 }
 
 .login-label {
   display: inline-block;
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--margin-md);
 }
 
 .login-input {
   box-sizing: border-box;
   width: 100%;
-  margin-bottom: 1rem;
-  padding: var(--padding-sm) var(--padding-md);
-  border-radius: 0.25rem;
+  padding: var(--padding-md) var(--padding-lg);
   border: 1px solid var(--color-border);
 }
 
 .login-link {
   display: inline-block;
-  margin-top: 0.5rem;
-  margin-bottom: 1.5rem;
   font-weight: 500;
   text-decoration: none;
   color: var(--color-text);
@@ -93,11 +87,7 @@ const signIn = () => {
 .login-button {
   width: 100%;
   background-color: var(--color-primary);
-  padding-top: var(--padding-sm);
-  padding-bottom: var(--padding-sm);
-  border-radius: 0.5rem;
-  font-weight: 600;
-  cursor: pointer;
+  padding: var(--padding-md) 0;
 }
 
 .login-button:hover {
@@ -113,6 +103,23 @@ const signIn = () => {
   right: 1.25rem;
   bottom: 28px;
   background: none;
+}
+
+.login-title,
+.login-input,
+.login-link {
+  margin-bottom: var(--margin-xl);
+}
+
+.login-card,
+.login-input,
+.login-button {
+  border-radius: var(--radius-lg);
+}
+
+.login-password-button,
+.login-button {
+  font-weight: 600;
   cursor: pointer;
 }
 

@@ -17,9 +17,11 @@ button {
   --color-primary: #fdc987;
   --color-border: #f2f0eb;
   --color-text: #000;
-  --radius-sm: 0.25rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 1rem;
-  --padding-sm: 0.75rem;
-  --padding-md: 1.25rem;
+  --radius-lg: 0.75rem;
+  --padding-md: 0.75rem;
+  --padding-lg: 1.25rem;
+  --margin-md: 0.5rem;
+  --margin-xl: 1rem;
+  --font-size-sm: 0.875rem;
+  --font-size-xl: 1.5rem;
 }
