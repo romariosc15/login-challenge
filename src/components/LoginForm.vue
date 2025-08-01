@@ -1,23 +1,18 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { mockedFetch } from '@/utils/fetch';
+const router = useRouter();
 const isPasswordVisible = ref(false);
 const togglePasswordVisibility = () => {
   isPasswordVisible.value = !isPasswordVisible.value;
 };
-const signIn = async () => {
-  const res = await fetch('/api/auth/login');
-  const json = await res.json();
-  console.log(json);
+const signIn = () => {
+  const response = mockedFetch('/api/auth/login');
+  if (response.type === 'success') {
+    router.push('/dashboard');
+  }
 };
-onMounted(() => {
-  window.fetch = async (url) => {
-    return {
-      ok: true,
-      status: 200,
-      json: async () => ({ type: 'success', message: 'Signed in successfully', url }),
-    };
-  };
-});
 </script>
 
 <template>
@@ -73,7 +68,6 @@ onMounted(() => {
 }
 
 .login-label {
-  font-size: 0.875rem;
   display: inline-block;
   margin-bottom: 0.5rem;
 }
@@ -82,27 +76,25 @@ onMounted(() => {
   box-sizing: border-box;
   width: 100%;
   margin-bottom: 1rem;
-  padding: 0.75rem 1.25rem;
+  padding: var(--padding-sm) var(--padding-md);
   border-radius: 0.25rem;
-  border: 1px solid #f2f0eb;
+  border: 1px solid var(--color-border);
 }
 
 .login-link {
   display: inline-block;
   margin-top: 0.5rem;
   margin-bottom: 1.5rem;
-  font-size: 0.875rem;
   font-weight: 500;
   text-decoration: none;
-  color: black;
+  color: var(--color-text);
 }
 
 .login-button {
-  font-size: 0.875rem;
   width: 100%;
-  background: #fdc987;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
+  background-color: var(--color-primary);
+  padding-top: var(--padding-sm);
+  padding-bottom: var(--padding-sm);
   border-radius: 0.5rem;
   font-weight: 600;
   cursor: pointer;
@@ -117,11 +109,17 @@ onMounted(() => {
 }
 
 .login-password-button {
-  font-size: 0.875rem;
   position: absolute;
   right: 1.25rem;
   bottom: 28px;
   background: none;
   cursor: pointer;
+}
+
+.login-password-button,
+.login-button,
+.login-link,
+.login-label {
+  font-size: var(--font-size-sm);
 }
 </style>
