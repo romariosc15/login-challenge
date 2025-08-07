@@ -3,7 +3,9 @@ html {
   font-family: 'Roboto', system-ui, sans-serif;
 }
 body,
+h5,
 h4,
+p,
 button {
   margin: 0;
   padding: 0;
@@ -17,11 +19,17 @@ button {
   --color-primary: #fdc987;
   --color-border: #f2f0eb;
   --color-text: #000;
+  --color-secondary: #636663;
+  --success-bg: #f1f9f4;
+  --success-border: #50db6c;
+  --error-bg: #fdeeea;
+  --error-border: #fe5459;
   --radius-lg: 0.75rem;
   --padding-md: 0.75rem;
   --padding-lg: 1.25rem;
   --margin-md: 0.5rem;
   --margin-xl: 1rem;
   --font-size-sm: 0.875rem;
+  --font-size-lg: 1.25rem;
   --font-size-xl: 1.5rem;
 }

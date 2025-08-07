@@ -1,16 +1,35 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, defineModel } from 'vue';
 import { useRouter } from 'vue-router';
 import { mockedFetch } from '@/utils/fetch';
+import NotificationMessage from './NotificationMessage.vue';
 const router = useRouter();
+const email = defineModel('email');
+const password = defineModel('password');
+let notificationData = { title: '', message: '' };
 const isPasswordVisible = ref(false);
+const isNotificationVisible = ref(false);
+const isLoading = ref(false);
 const togglePasswordVisibility = () => {
   isPasswordVisible.value = !isPasswordVisible.value;
 };
-const signIn = () => {
-  const response = mockedFetch('/api/auth/login');
-  if (response.type === 'success') {
-    router.push('/dashboard');
+const signIn = async () => {
+  isLoading.value = true;
+  const response = await mockedFetch('/api/auth/login', {
+    body: JSON.stringify({ email: email.value, password: password.value }),
+  });
+  const data = await response.json();
+  notificationData = {
+    title: data.title,
+    message: data.message,
+    type: data.type,
+  };
+  isNotificationVisible.value = true;
+  isLoading.value = false;
+  if (data.type === 'success') {
+    setTimeout(() => router.push('/dashboard'), 2000);
+  } else if (data.type === 'error') {
+    setTimeout(() => (isNotificationVisible.value = false), 2000);
   }
 };
 </script>
@@ -22,6 +41,7 @@ const signIn = () => {
       <div>
         <label class="login-label" for="email">Email</label>
         <input
+          v-model="email"
           required
           placeholder="Enter your email"
           class="login-input"
@@ -33,6 +53,7 @@ const signIn = () => {
       <div class="password-container">
         <label class="login-label" for="password">Password</label>
         <input
+          v-model="password"
           required
           placeholder="Enter your password"
           class="login-input"
@@ -46,9 +67,10 @@ const signIn = () => {
       </div>
       <div>
         <a class="login-link" href="#">Forgot password?</a>
-        <button type="submit" class="login-button">Sign in</button>
+        <button :disabled="isLoading" type="submit" class="login-button">Sign in</button>
       </div>
     </form>
+    <NotificationMessage v-show="isNotificationVisible" :notification="notificationData" />
   </div>
 </template>
 
@@ -128,5 +150,8 @@ const signIn = () => {
 .login-link,
 .login-label {
   font-size: var(--font-size-sm);
+}
+.login-button[disabled] {
+  cursor: not-allowed;
 }
 </style>
