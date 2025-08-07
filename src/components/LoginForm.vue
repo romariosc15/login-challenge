@@ -25,11 +25,11 @@ const signIn = async () => {
     type: data.type,
   };
   isNotificationVisible.value = true;
-  isLoading.value = false;
   if (data.type === 'success') {
-    setTimeout(() => router.push('/dashboard'), 2000);
+    setTimeout(() => router.push('/dashboard'), 3000);
   } else if (data.type === 'error') {
-    setTimeout(() => (isNotificationVisible.value = false), 2000);
+    setTimeout(() => (isNotificationVisible.value = false), 3000);
+    isLoading.value = false;
   }
 };
 </script>

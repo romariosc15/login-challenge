@@ -7,8 +7,22 @@ const { notification } = defineProps({
 
 <template>
   <div class="notification-container" :class="`notification-container-${notification.type}`">
-    <h5 class="notification-title">{{ notification.title }}</h5>
-    <p class="notification-message">{{ notification.message }}</p>
+    <img
+      v-if="notification.type === 'success'"
+      class="notification-image"
+      src="../assets/images/check.png"
+      alt=""
+    />
+    <img
+      v-else-if="notification.type === 'error'"
+      class="notification-image"
+      src="../assets/images/error.png"
+      alt=""
+    />
+    <div class="notification-content">
+      <h5 class="notification-title">{{ notification.title }}</h5>
+      <p class="notification-message">{{ notification.message }}</p>
+    </div>
   </div>
 </template>
 
@@ -22,12 +36,20 @@ const { notification } = defineProps({
   border: 1px solid var(--error-border);
 }
 .notification-container {
+  display: flex;
+  flex-direction: row;
+  gap: 0.75rem;
   padding: var(--padding-lg);
   border-radius: var(--radius-lg);
   position: fixed;
   top: 16px;
   right: 16px;
 }
+
+.notification-image {
+  width: 50px;
+}
+
 .notification-title {
   font-weight: 600;
   margin-bottom: var(--margin-md);
