@@ -48,23 +48,25 @@ const imageSrc = computed(() => {
 .notification-container {
   display: flex;
   flex-direction: row;
+  align-items: center;
   gap: 0.75rem;
   padding: var(--padding-lg);
   border-radius: var(--radius-lg);
   position: fixed;
-  top: 16px;
+  top: 24px;
   left: 50%;
   transform: translateX(-50%);
 }
 
 .notification-image {
-  width: 50px;
+  width: 40px;
+  height: 40px;
 }
 
 .notification-title {
   font-weight: 600;
   font-size: var(--font-size-lg);
-  margin-bottom: var(--margin-md);
+  margin-bottom: var(--margin-sm);
 }
 
 .notification-message {
