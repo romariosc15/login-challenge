@@ -46,7 +46,8 @@ const imageSrc = computed(() => {
   border: 1px solid var(--error-border);
 }
 .notification-container {
-  width: 20%;
+  box-sizing: border-box;
+  width: 25%;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -72,5 +73,27 @@ const imageSrc = computed(() => {
 
 .notification-message {
   color: var(--color-secondary);
+}
+
+@media (max-width: 1280px) {
+  .notification-container {
+    width: 30%;
+  }
+}
+
+@media (max-width: 1024px) {
+  .notification-container {
+    width: 40%;
+  }
+}
+@media (max-width: 768px) {
+  .notification-container {
+    width: 50%;
+  }
+}
+@media (max-width: 640px) {
+  .notification-container {
+    width: 90%;
+  }
 }
 </style>

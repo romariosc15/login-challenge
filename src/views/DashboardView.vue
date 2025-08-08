@@ -27,7 +27,7 @@ const signOut = () => {
   background: #f2f0eb;
 }
 .main-image {
-  width: 500px;
+  width: 25%;
   margin-bottom: var(--margin-xl);
 }
 .logout-button {
@@ -40,5 +40,27 @@ const signOut = () => {
 
 .logout-button:hover {
   opacity: 0.85;
+}
+
+@media (max-width: 1280px) {
+  .main-image {
+    width: 30%;
+  }
+}
+
+@media (max-width: 1024px) {
+  .main-image {
+    width: 40%;
+  }
+}
+@media (max-width: 768px) {
+  .main-image {
+    width: 50%;
+  }
+}
+@media (max-width: 640px) {
+  .main-image {
+    width: 90%;
+  }
 }
 </style>

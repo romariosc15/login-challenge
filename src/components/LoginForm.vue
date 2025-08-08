@@ -68,8 +68,9 @@ onMounted(() => {
 
 <style scoped>
 .login-card {
+  box-sizing: border-box;
   background-color: white;
-  width: 20%;
+  width: 25%;
   padding: 2rem 2.5rem;
 }
 
@@ -146,5 +147,27 @@ onMounted(() => {
 }
 .login-button[disabled] {
   cursor: not-allowed;
+}
+
+@media (max-width: 1280px) {
+  .login-card {
+    width: 30%;
+  }
+}
+@media (max-width: 1024px) {
+  .login-card {
+    width: 40%;
+  }
+}
+@media (max-width: 768px) {
+  .login-card {
+    width: 50%;
+  }
+}
+@media (max-width: 640px) {
+  .login-card {
+    width: 90%;
+    padding: 1rem 1.25rem;
+  }
 }
 </style>
