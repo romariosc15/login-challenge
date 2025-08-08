@@ -1,27 +1,37 @@
 <script setup>
-import { defineProps } from 'vue';
-const { notification } = defineProps({
+import { computed } from 'vue';
+const props = defineProps({
   notification: Object,
+});
+const imageSrc = computed(() => {
+  switch (props.notification.type) {
+    case 'success':
+      return new URL('../assets/images/check.png', import.meta.url).href;
+    case 'error':
+      return new URL('../assets/images/error.png', import.meta.url).href;
+    default:
+      return null;
+  }
 });
 </script>
 
 <template>
-  <div class="notification-container" :class="`notification-container-${notification.type}`">
+  <div
+    class="notification-container"
+    :class="{
+      'notification-container-success': props.notification.type === 'success',
+      'notification-container-error': props.notification.type === 'error',
+    }"
+  >
     <img
-      v-if="notification.type === 'success'"
+      v-if="imageSrc"
       class="notification-image"
-      src="../assets/images/check.png"
-      alt=""
-    />
-    <img
-      v-else-if="notification.type === 'error'"
-      class="notification-image"
-      src="../assets/images/error.png"
-      alt=""
+      :src="imageSrc"
+      :alt="`${props.notification.type} icon`"
     />
     <div class="notification-content">
-      <h5 class="notification-title">{{ notification.title }}</h5>
-      <p class="notification-message">{{ notification.message }}</p>
+      <h5 class="notification-title">{{ props.notification.title }}</h5>
+      <p class="notification-message">{{ props.notification.message }}</p>
     </div>
   </div>
 </template>
@@ -43,7 +53,8 @@ const { notification } = defineProps({
   border-radius: var(--radius-lg);
   position: fixed;
   top: 16px;
-  right: 16px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .notification-image {
@@ -52,6 +63,7 @@ const { notification } = defineProps({
 
 .notification-title {
   font-weight: 600;
+  font-size: var(--font-size-lg);
   margin-bottom: var(--margin-md);
 }
 

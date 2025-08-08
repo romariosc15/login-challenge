@@ -1,52 +1,42 @@
 import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
-import Notification from './Notification.vue';
+import NotificationMessage from '../../components/NotificationMessage.vue';
 
-describe('Notification.vue', () => {
+const mountNotification = (type, title, message) => {
+  return mount(NotificationMessage, {
+    props: {
+      notification: { type, title, message },
+    },
+  });
+};
+
+describe('NotificationMessage.vue', () => {
   it('renders success notification correctly', () => {
-    const notification = {
-      type: 'success',
-      title: 'Success!',
-      message: 'Your action was successful.',
-    };
-
-    const wrapper = mount(Notification, {
-      props: { notification },
-    });
+    const wrapper = mountNotification(
+      'success',
+      'Signed in',
+      'You will be redirected to your dashboard.',
+    );
 
     expect(wrapper.classes()).toContain('notification-container-success');
     expect(wrapper.find('img').attributes('src')).toContain('check.png');
-    expect(wrapper.find('.notification-title').text()).toBe(notification.title);
-    expect(wrapper.find('.notification-message').text()).toBe(notification.message);
+    expect(wrapper.find('.notification-title').text()).toBe('Signed in');
+    expect(wrapper.find('.notification-message').text()).toBe(
+      'You will be redirected to your dashboard.',
+    );
   });
 
   it('renders error notification correctly', () => {
-    const notification = {
-      type: 'error',
-      title: 'Error!',
-      message: 'Something went wrong.',
-    };
-
-    const wrapper = mount(Notification, {
-      props: { notification },
-    });
+    const wrapper = mountNotification('error', 'Sign in error', 'Invalid credentials.');
 
     expect(wrapper.classes()).toContain('notification-container-error');
     expect(wrapper.find('img').attributes('src')).toContain('error.png');
-    expect(wrapper.find('.notification-title').text()).toBe(notification.title);
-    expect(wrapper.find('.notification-message').text()).toBe(notification.message);
+    expect(wrapper.find('.notification-title').text()).toBe('Sign in error');
+    expect(wrapper.find('.notification-message').text()).toBe('Invalid credentials.');
   });
 
   it('does not render image for unknown type', () => {
-    const notification = {
-      type: 'info',
-      title: 'Info',
-      message: 'Just so you know.',
-    };
-
-    const wrapper = mount(Notification, {
-      props: { notification },
-    });
+    const wrapper = mountNotification('', '', '');
 
     expect(wrapper.find('img').exists()).toBe(false);
   });
