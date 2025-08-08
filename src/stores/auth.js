@@ -33,8 +33,10 @@ export const useAuthStore = defineStore('auth', () => {
         body: JSON.stringify({ email: email, password: password }),
       });
       data = await response.json();
-      token.value = data.token;
-      localStorage.setItem('token', data.token);
+      if (data.type === 'success') {
+        token.value = data.token;
+        localStorage.setItem('token', data.token);
+      }
       setNotification({
         title: data.title,
         message: data.message,

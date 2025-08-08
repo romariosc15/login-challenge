@@ -1,9 +1,10 @@
 <script setup>
-import { ref, defineModel, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { useAuthStore } from '@/stores/auth';
 import NotificationMessage from './NotificationMessage.vue';
+import LoadingSpinner from './LoadingSpinner.vue';
 
 const auth = useAuthStore();
 const router = useRouter();
@@ -55,7 +56,10 @@ onMounted(() => {
       </div>
       <div>
         <a class="login-link" href="#">Forgot password?</a>
-        <button :disabled="auth.isLoading" type="submit" class="login-button">Sign in</button>
+        <button :disabled="auth.isLoading" type="submit" class="login-button">
+          <LoadingSpinner v-if="auth.isLoading" />
+          <span v-else>Sign in</span>
+        </button>
       </div>
     </form>
     <NotificationMessage v-show="auth.isNotificationVisible" :notification="auth.notification" />
@@ -100,7 +104,8 @@ onMounted(() => {
   padding: var(--padding-md) 0;
 }
 
-.login-button:hover {
+.login-button:hover,
+.login-button[disabled] {
   opacity: 0.85;
 }
 
