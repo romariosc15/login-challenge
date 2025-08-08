@@ -1,5 +1,5 @@
 <script setup>
-import { ref, defineModel } from 'vue';
+import { ref, defineModel, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { useAuthStore } from '@/stores/auth';
@@ -17,6 +17,9 @@ const signIn = async () => {
   await auth.login({ email: email.value, password: password.value });
   if (auth.isAuthenticated) setTimeout(() => router.push('/dashboard'), 2500);
 };
+onMounted(() => {
+  if (auth.isAuthenticated) router.push('/dashboard');
+});
 </script>
 
 <template>
