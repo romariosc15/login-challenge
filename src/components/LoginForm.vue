@@ -11,6 +11,7 @@ const router = useRouter();
 const email = defineModel('email');
 const password = defineModel('password');
 const isPasswordVisible = ref(false);
+
 const togglePasswordVisibility = () => {
   isPasswordVisible.value = !isPasswordVisible.value;
 };
@@ -18,6 +19,7 @@ const signIn = async () => {
   await auth.login({ email: email.value, password: password.value });
   if (auth.isAuthenticated) setTimeout(() => router.push('/dashboard'), 2500);
 };
+
 onMounted(() => {
   if (auth.isAuthenticated) router.push('/dashboard');
 });
