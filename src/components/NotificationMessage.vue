@@ -46,6 +46,7 @@ const imageSrc = computed(() => {
   border: 1px solid var(--error-border);
 }
 .notification-container {
+  width: 20%;
   display: flex;
   flex-direction: row;
   align-items: center;

@@ -1,20 +1,22 @@
 export async function mockedFetch(url, options) {
   if (url === '/api/auth/login') {
     const payload = JSON.parse(options.body);
+    const token = 'fake-jwt-token';
     let result = {};
+
     if (payload.email === 'romariosc15@outlook.com' && payload.password === '123-123') {
       result = async () => ({
         type: 'success',
         title: 'Signed in successfully',
         message: 'Redirecting to dashboard.',
-        url,
+        token,
       });
     } else {
       result = async () => ({
         type: 'error',
         title: 'Invalid credentials',
         message: 'Your email or password is not correct.',
-        url,
+        token,
       });
     }
     return {
@@ -23,6 +25,5 @@ export async function mockedFetch(url, options) {
       json: result,
     };
   }
-  console.log('FAAALSEE');
   return fetch(url, options);
 }

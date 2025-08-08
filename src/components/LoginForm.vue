@@ -1,36 +1,21 @@
 <script setup>
 import { ref, defineModel } from 'vue';
 import { useRouter } from 'vue-router';
-import { mockedFetch } from '@/utils/fetch';
+
+import { useAuthStore } from '@/stores/auth';
 import NotificationMessage from './NotificationMessage.vue';
+
+const auth = useAuthStore();
 const router = useRouter();
 const email = defineModel('email');
 const password = defineModel('password');
-let notificationData = { title: '', message: '' };
 const isPasswordVisible = ref(false);
-const isNotificationVisible = ref(false);
-const isLoading = ref(false);
 const togglePasswordVisibility = () => {
   isPasswordVisible.value = !isPasswordVisible.value;
 };
 const signIn = async () => {
-  isLoading.value = true;
-  const response = await mockedFetch('/api/auth/login', {
-    body: JSON.stringify({ email: email.value, password: password.value }),
-  });
-  const data = await response.json();
-  notificationData = {
-    title: data.title,
-    message: data.message,
-    type: data.type,
-  };
-  isNotificationVisible.value = true;
-  if (data.type === 'success') {
-    setTimeout(() => router.push('/dashboard'), 3000);
-  } else if (data.type === 'error') {
-    setTimeout(() => (isNotificationVisible.value = false), 3000);
-    isLoading.value = false;
-  }
+  await auth.login({ email: email.value, password: password.value });
+  if (auth.isAuthenticated) setTimeout(() => router.push('/dashboard'), 2500);
 };
 </script>
 
@@ -67,10 +52,10 @@ const signIn = async () => {
       </div>
       <div>
         <a class="login-link" href="#">Forgot password?</a>
-        <button :disabled="isLoading" type="submit" class="login-button">Sign in</button>
+        <button :disabled="auth.isLoading" type="submit" class="login-button">Sign in</button>
       </div>
     </form>
-    <NotificationMessage v-show="isNotificationVisible" :notification="notificationData" />
+    <NotificationMessage v-show="auth.isNotificationVisible" :notification="auth.notification" />
   </div>
 </template>
 
